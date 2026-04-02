@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liago Studio — Mobile App Development</title>
-  <meta name="description" content="Liago Studio conçoit des applications mobiles iOS centrées sur le bien-être, les rituels quotidiens et le changement de comportement.">
+  <title>Liago Studio — Applications mobiles bien-être & rituels</title>
+  <meta name="description" content="Liago Studio conçoit et publie des applications mobiles centrées sur le bien-être, les rituels quotidiens et le changement de comportement durable.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #FAFAF8;
       --fg: #1A1A18;
       --fg-muted: #6B6B65;
+      --fg-light: #9B9B95;
       --accent: #E8572A;
+      --accent-soft: #FFF0EB;
+      --accent-dark: #C94420;
       --border: #E5E5E0;
+      --card-bg: #FFFFFF;
       --serif: 'DM Serif Display', Georgia, serif;
       --sans: 'Instrument Sans', system-ui, sans-serif;
     }
@@ -26,6 +30,7 @@
     }
 
     html {
+      scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -35,13 +40,22 @@
       color: var(--fg);
       line-height: 1.65;
       font-size: 16px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* ─── NAV ─── */
     nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
       padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250, 250, 248, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
 
@@ -53,18 +67,76 @@
       letter-spacing: -0.02em;
     }
 
-    .logo span {
-      color: var(--accent);
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
     }
 
+    .nav-links a {
+      color: var(--fg-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── SECTIONS ─── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5.5rem 0;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--fg-muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─── HERO ─── */
     .hero {
-      flex: 1;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 4rem 2rem;
+      padding: 8rem 2rem 4rem;
       position: relative;
       overflow: hidden;
     }
@@ -72,13 +144,55 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: -30%;
-      right: -10%;
-      width: 600px;
-      height: 600px;
+      top: -25%;
+      right: -15%;
+      width: 700px;
+      height: 700px;
       background: radial-gradient(circle, rgba(232, 87, 42, 0.06) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(232, 87, 42, 0.03) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .hero h1 {
@@ -89,7 +203,7 @@
       letter-spacing: -0.03em;
       max-width: 750px;
       margin-bottom: 1.5rem;
-      animation: fadeUp 0.8s ease both;
+      animation: fadeUp 0.8s ease 0.1s both;
     }
 
     .hero h1 em {
@@ -100,9 +214,9 @@
     .hero p {
       font-size: 1.125rem;
       color: var(--fg-muted);
-      max-width: 520px;
+      max-width: 540px;
       line-height: 1.7;
-      animation: fadeUp 0.8s ease 0.15s both;
+      animation: fadeUp 0.8s ease 0.2s both;
     }
 
     @keyframes fadeUp {
@@ -110,19 +224,778 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ─── MISSION ─── */
+    .mission-grid {
+      margin-bottom: 2.5rem;
+    }
+
+    .mission-text {
+      color: var(--fg-muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .mission-text p + p {
+      margin-top: 1rem;
+    }
+
+    .mission-stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .stat-card {
+      flex: 1;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-card:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      font-weight: 500;
+    }
+
+    /* ─── APPROACH ─── */
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .approach-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem 1.75rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .approach-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+
+    .approach-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.2rem;
+    }
+
+    .approach-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+    }
+
+    .approach-card p {
+      color: var(--fg-muted);
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    /* ─── APPS ─── */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .app-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 45px rgba(0,0,0,0.06);
+    }
+
+    .app-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .app-icon-warm { background: linear-gradient(135deg, #FDE68A, #F59E0B); }
+    .app-icon-blue { background: linear-gradient(135deg, #BFDBFE, #3B82F6); }
+    .app-icon-green { background: linear-gradient(135deg, #BBF7D0, #22C55E); }
+
+    .app-tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+    }
+
+    .tag-dev { background: #FEF3C7; color: #B45309; }
+    .tag-concept { background: #E0E7FF; color: #4338CA; }
+
+    .app-card h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .app-card p {
+      color: var(--fg-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .app-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .app-tags span {
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      font-weight: 500;
+    }
+
+    /* ─── PROCESS ─── */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      counter-reset: step;
+    }
+
+    .process-step {
+      position: relative;
+      padding: 1.75rem 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      counter-increment: step;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .process-step:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .process-step::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .process-step h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+    }
+
+    .process-step p {
+      color: var(--fg-muted);
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    /* ─── STACK ─── */
+    .stack-categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .stack-category h3 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fg-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .stack-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .stack-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: var(--fg);
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .stack-chip:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .stack-chip .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .dot-mobile { background: #3B82F6; }
+    .dot-backend { background: #8B5CF6; }
+    .dot-infra { background: #10B981; }
+    .dot-tools { background: #F59E0B; }
+
+    /* ─── VALUES ─── */
+    .values-section {
+      background: var(--fg);
+      color: var(--bg);
+      padding: 5.5rem 0;
+    }
+
+    .values-section .section-label {
+      color: rgba(232, 87, 42, 0.8);
+    }
+
+    .values-section .section-title {
+      color: var(--bg);
+    }
+
+    .values-section .section-desc {
+      color: rgba(250, 250, 248, 0.6);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .value-item {
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .value-item:hover {
+      border-color: rgba(232, 87, 42, 0.4);
+    }
+
+    .value-item h3 {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--bg);
+    }
+
+    .value-item p {
+      color: rgba(250, 250, 248, 0.55);
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      text-align: center;
+      padding: 5.5rem 0;
+    }
+
+    .contact .section-title {
+      margin-bottom: 0.75rem;
+    }
+
+    .contact p {
+      color: var(--fg-muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .contact-email:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    .contact-meta {
+      margin-top: 2.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      color: var(--fg-light);
+      font-size: 0.85rem;
+    }
+
+    .contact-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left .logo {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-left p {
+      color: var(--fg-light);
+      font-size: 0.8rem;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fg);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-col a {
+      color: var(--fg-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.25s;
+    }
+
+    .footer-col a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--fg-light);
+    }
+
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.25rem; }
-      .hero { padding: 3rem 1.25rem; }
+
+      .nav-links { display: none; }
+
+      .container { padding: 0 1.25rem; }
+
+      section { padding: 3.5rem 0; }
+
+      .hero { padding: 7rem 1.25rem 3rem; min-height: auto; }
+
+      .mission-grid,
+      .values-grid,
+      .stack-categories {
+        grid-template-columns: 1fr;
+      }
+
+      .approach-grid,
+      .apps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .footer-links {
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .contact-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .values-section { padding: 3.5rem 0; }
     }
   </style>
 </head>
 <body>
+
+  <!-- NAV -->
   <nav>
     <a href="#" class="logo">Liago<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#approach">Approche</a></li>
+      <li><a href="#apps">Applications</a></li>
+      <li><a href="#process">Méthode</a></li>
+      <li><a href="#stack">Technologies</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </nav>
+
+  <!-- HERO -->
   <section class="hero">
-    <h1>Des apps mobiles qui changent les <em>habitudes</em></h1>
-    <p>Liago Studio conçoit et publie des applications iOS centrées sur le bien-être, les rituels quotidiens et le changement de comportement durable.</p>
+    <div>
+      <div class="hero-badge">Éditeur français d'apps mobiles</div>
+      <h1>Des apps mobiles qui changent les <em>habitudes</em></h1>
+      <p>Liago Studio conçoit et publie des applications mobiles centrées sur le bien-être, les rituels quotidiens et le changement de comportement durable.</p>
+    </div>
   </section>
-</body>
-</html>
+
+  <hr class="divider">
+
+  <!-- MISSION -->
+  <section id="mission">
+    <div class="container">
+      <div class="section-label">Notre mission</div>
+      <h2 class="section-title">Créer des outils numériques qui respectent l'utilisateur</h2>
+      <div class="mission-grid">
+        <div class="mission-text">
+          <p>Liago Studio est un éditeur français d'applications mobiles fondé sur une conviction : la technologie peut aider les gens à développer de meilleures habitudes sans exploiter leur attention.</p>
+          <p>Chaque application que nous concevons résout un problème précis. Nous refusons la gamification artificielle, les dark patterns et les notifications intrusives. Notre approche s'appuie sur la recherche en psychologie comportementale pour concevoir des expériences qui respectent le temps et l'autonomie de chaque utilisateur.</p>
+          <p>Notre ambition est de constituer un catalogue d'applications spécialisées, chacune pensée comme un outil de qualité au service d'un objectif personnel clair.</p>
+        </div>
+      </div>
+      <div class="mission-stats">
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Anti-gamification</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">iOS</div>
+          <div class="stat-label">Plateforme cible</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Problème par app</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">FR</div>
+          <div class="stat-label">Conçu en France</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="container">
+      <div class="section-label">Notre approche</div>
+      <h2 class="section-title">La science au service des habitudes</h2>
+      <p class="section-desc">Chaque fonctionnalité repose sur des principes validés par la recherche en sciences comportementales.</p>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <div class="approach-icon">🧠</div>
+          <h3>Science-driven design</h3>
+          <p>Nos mécanismes de formation d'habitudes s'appuient sur les modèles comportementaux issus de la recherche académique, comme le cycle cue-routine-reward et la théorie du changement en 66 jours.</p>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon">🛡️</div>
+          <h3>Respect de l'utilisateur</h3>
+          <p>Aucun streak culpabilisant, aucune notification intrusive, aucun dark pattern. L'utilisateur reste maître de son expérience à chaque instant. Nous construisons des outils, pas des pièges à attention.</p>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon">⚡</div>
+          <h3>Craft & performance</h3>
+          <p>Des interfaces minimalistes et soignées, des animations fluides, des performances natives. Chaque écran est conçu avec une attention au détail qui reflète notre exigence de qualité.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- APPS -->
+  <section id="apps">
+    <div class="container">
+      <div class="section-label">Applications</div>
+      <h2 class="section-title">Notre catalogue en construction</h2>
+      <p class="section-desc">Des applications ciblées, chacune conçue pour résoudre un problème précis avec élégance et simplicité.</p>
+      <div class="apps-grid">
+        <div class="app-card">
+          <div class="app-icon app-icon-warm">☀️</div>
+          <div class="app-tag tag-dev">En développement</div>
+          <h3>Rituel du matin</h3>
+          <p>Construisez une routine matinale durable grâce à un système fondé sur les déclencheurs comportementaux. Sans streak ni culpabilité.</p>
+          <div class="app-tags">
+            <span>Habitudes</span>
+            <span>Bien-être</span>
+            <span>Rituels</span>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-icon app-icon-blue">🌙</div>
+          <div class="app-tag tag-concept">En conception</div>
+          <h3>Rituel du soir</h3>
+          <p>Un compagnon de décompression nocturne pour préparer un sommeil réparateur à travers une routine de wind-down personnalisée.</p>
+          <div class="app-tags">
+            <span>Sommeil</span>
+            <span>Relaxation</span>
+            <span>Rituels</span>
+          </div>
+        </div>
+        <div class="app-card">
+          <div class="app-icon app-icon-green">🎯</div>
+          <div class="app-tag tag-concept">En conception</div>
+          <h3>Deep Focus</h3>
+          <p>Un timer de sessions de travail profond conçu pour maximiser la concentration et protéger votre temps de réflexion.</p>
+          <div class="app-tags">
+            <span>Productivité</span>
+            <span>Focus</span>
+            <span>Timer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="container">
+      <div class="section-label">Méthode</div>
+      <h2 class="section-title">De l'idée à la publication</h2>
+      <p class="section-desc">Chaque application suit un processus rigoureux, de la validation du besoin jusqu'à la publication sur l'App Store.</p>
+      <div class="process-steps">
+        <div class="process-step">
+          <h3>Recherche</h3>
+          <p>Identification d'un besoin précis, analyse de marché et validation de la niche avant tout développement.</p>
+        </div>
+        <div class="process-step">
+          <h3>Conception</h3>
+          <p>Design d'interface minimaliste, architecture technique et définition du modèle comportemental sous-jacent.</p>
+        </div>
+        <div class="process-step">
+          <h3>Développement</h3>
+          <p>Développement natif avec notre stack technique industrialisée, tests et itérations sur l'expérience utilisateur.</p>
+        </div>
+        <div class="process-step">
+          <h3>Publication</h3>
+          <p>Soumission App Store, optimisation du référencement (ASO) et suivi des métriques d'acquisition et de rétention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES (dark section) -->
+  <div class="values-section">
+    <div class="container">
+      <div class="section-label">Nos engagements</div>
+      <h2 class="section-title">Ce en quoi nous croyons</h2>
+      <p class="section-desc">Des principes qui guident chaque décision, du design au modèle économique.</p>
+      <div class="values-grid">
+        <div class="value-item">
+          <h3>Transparence</h3>
+          <p>Pas de monétisation cachée, pas de revente de données. Nos applications fonctionnent sur un modèle d'abonnement clair et honnête.</p>
+        </div>
+        <div class="value-item">
+          <h3>Minimalisme intentionnel</h3>
+          <p>Chaque fonctionnalité doit justifier sa présence. Nous préférons retirer que d'ajouter. Moins d'écrans, plus d'impact.</p>
+        </div>
+        <div class="value-item">
+          <h3>Autonomie de l'utilisateur</h3>
+          <p>Nos apps sont des outils, pas des béquilles. L'objectif est de rendre l'utilisateur autonome dans ses habitudes, pas dépendant de l'application.</p>
+        </div>
+        <div class="value-item">
+          <h3>Qualité artisanale</h3>
+          <p>Nous investissons le temps nécessaire pour que chaque interaction soit fluide, chaque pixel à sa place, chaque animation cohérente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-label">Technologies</div>
+      <h2 class="section-title">Stack technique</h2>
+      <p class="section-desc">Un socle technique moderne et industrialisé, conçu pour supporter un catalogue d'applications en croissance.</p>
+      <div class="stack-categories">
+        <div class="stack-category">
+          <h3>Mobile</h3>
+          <div class="stack-chips">
+            <div class="stack-chip"><span class="dot dot-mobile"></span>Flutter</div>
+            <div class="stack-chip"><span class="dot dot-mobile"></span>iOS natif</div>
+            <div class="stack-chip"><span class="dot dot-mobile"></span>RevenueCat</div>
+          </div>
+        </div>
+        <div class="stack-category">
+          <h3>Backend</h3>
+          <div class="stack-chips">
+            <div class="stack-chip"><span class="dot dot-backend"></span>NestJS</div>
+            <div class="stack-chip"><span class="dot dot-backend"></span>PostgreSQL</div>
+            <div class="stack-chip"><span class="dot dot-backend"></span>Prisma</div>
+            <div class="stack-chip"><span class="dot dot-backend"></span>Redis</div>
+          </div>
+        </div>
+        <div class="stack-category">
+          <h3>Infrastructure</h3>
+          <div class="stack-chips">
+            <div class="stack-chip"><span class="dot dot-infra"></span>Docker</div>
+            <div class="stack-chip"><span class="dot dot-infra"></span>Traefik</div>
+            <div class="stack-chip"><span class="dot dot-infra"></span>GitHub Actions</div>
+          </div>
+        </div>
+        <div class="stack-category">
+          <h3>Outils</h3>
+          <div class="stack-chips">
+            <div class="stack-chip"><span class="dot dot-tools"></span>Firebase</div>
+            <div class="stack-chip"><span class="dot dot-tools"></span>Fastlane</div>
+            <div class="stack-chip"><span class="dot dot-tools"></span>Cursor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Parlons-en</h2>
+      <p>Une question, un partenariat, ou simplement curieux de notre travail ?</p>
+      <a href="/cdn-cgi/l/email-protection#a1c2cecfd5c0c2d5e1cdc8c0c6ce8fd2d5d4c5c8ce" class="contact-email"><span class="__cf_email__" data-cfemail="03606c6d77626077436f6a62646c2d707776676a6c">[email&#160;protected]</span></a>
+      <div class="contact-meta">
+        <span>📍 France</span>
+        <span>🌐 liago.studio</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <a href="#" class="logo">Liago<span>.</span></a>
+          <p>Éditeur français d'applications mobiles centrées sur le bien-être et le changement de comportement.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Studio</h4>
+            <ul>
+              <li><a href="#mission">Mission</a></li>
+              <li><a href="#approach">Approche</a></li>
+              <li><a href="#apps">Applications</a></li>
+              <li><a href="#stack">Technologies</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Informations</h4>
+            <ul>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="/cdn-cgi/l/email-protection#2744484953464453674b4e46404809545352434e48">Email</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Légal</h4>
+            <ul>
+              <li><a href="#">Mentions légales</a></li>
+              <li><a href="#">Politique de confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
